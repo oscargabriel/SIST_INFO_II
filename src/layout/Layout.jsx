@@ -57,7 +57,7 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
 
-  background: '#D9D9D9',
+  background: '#F5F5F5',
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -82,6 +82,35 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
+const LinkMenu = styled(Link)(() => ({
+  textDecoration: 'none',
+  fontWeight: 'bold',
+  color: '#D9D9D9',
+}));
+
+// Componente para las opciones de menu
+const ChoiseMenu = ({ section_name, choises }) => {
+  return (
+    <List>
+      <Typography variant="h7" color={"#6D6D6D"} fontWeight={"bold"}>
+        {section_name}
+      </Typography>
+      {choises.map((obj, index) => (
+        <ListItem key={index} disablePadding>
+          <LinkMenu to={obj.path}>
+            <ListItemButton>
+              <ListItemIcon>
+                {obj.icon}
+              </ListItemIcon>
+              <ListItemText primary={obj.name} />
+            </ListItemButton>
+
+          </LinkMenu>
+        </ListItem>
+      ))}
+    </List>
+  )
+}
 
 const Layout = () => {
   const [open, setOpen] = useState(false);
@@ -117,9 +146,9 @@ const Layout = () => {
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "black" }} />
           </IconButton>
-          <Typography variant="h6" color={"red"}>
+          <Typography variant="h6" color={"#D43535"} fontWeight={"bold"}>
             MundoVinyl
           </Typography>
         </Toolbar>
@@ -145,106 +174,59 @@ const Layout = () => {
         </DrawerHeader>
 
         <Divider />
-        <List>
-          <h4>Módulos</h4>
-          {[
-            {
-              name: 'Compras',
-              icon: <ShoppingBagIcon />,
-              path: "/compras"
-            },
-            {
-              name: 'Ventas',
-              icon: <PointOfSaleIcon />,
-              path: "/ventas"
-            }
-          ].map((obj, index) => (
-            <ListItem key={index} disablePadding>
-              <Link to={obj.path}>
-                <ListItemButton>
-                <ListItemIcon>
-                  {obj.icon}
-                </ListItemIcon>
-                  <ListItemText primary={obj.name} />
-                </ListItemButton>
-
-              </Link>
-
-            </ListItem>
-          ))}
-        </List>
+        <ChoiseMenu section_name="Módulos" choises={[
+          {
+            name: 'Compras',
+            icon: <ShoppingBagIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/compras"
+          },
+          {
+            name: 'Ventas',
+            icon: <PointOfSaleIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/ventas"
+          }
+        ]} />
 
         <Divider />
 
-        <List>
-          <h4>Catalogos</h4>
-          {[
-            {
-              name: 'Clientes',
-              icon: <GroupIcon />,
-              path: "/clientes"
-            },
-            {
-              name: 'Productos',
-              icon: <InventoryIcon />,
-              path: "/productos"
-            },
-            {
-              name: 'Proveedores',
-              icon: <LocalShippingIcon />,
-              path: "/proveedores"
-            }
-          ].map((obj, index) => (
-            <ListItem key={index} disablePadding>
-              <Link to={obj.path}>
-                <ListItemButton>
-                <ListItemIcon>
-                  {obj.icon}
-                </ListItemIcon>
-                  <ListItemText primary={obj.name} />
-                </ListItemButton>
-
-              </Link>
-
-            </ListItem>
-          ))}
-        </List>
+        <ChoiseMenu section_name="Catálogos" choises={[
+          {
+            name: 'Clientes',
+            icon: <GroupIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/clientes"
+          },
+          {
+            name: 'Productos',
+            icon: <InventoryIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/productos"
+          },
+          {
+            name: 'Proveedores',
+            icon: <LocalShippingIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/proveedores"
+          }
+        ]} />
 
         <Divider />
 
-        <List>
-          <h4>Usuarios</h4>
-          {[
-            {
-              name: 'Empleados',
-              icon: <GroupIcon />,
-              path: "/empleados"
-            },
-            {
-              name: 'Roles',
-              icon: <LanIcon />,
-              path: "/roles"
-            },
-            {
-              name: 'Salir',
-              icon: <LogoutIcon />,
-              path: "/"
-            }
-          ].map((obj, index) => (
-            <ListItem key={index} disablePadding>
-              <Link to={obj.path}>
-                <ListItemButton>
-                <ListItemIcon>
-                  {obj.icon}
-                </ListItemIcon>
-                  <ListItemText primary={obj.name} />
-                </ListItemButton>
+        <ChoiseMenu section_name="Usuarios" choises={[
+          {
+            name: 'Empleados',
+            icon: <GroupIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/empleados"
+          },
+          {
+            name: 'Roles',
+            icon: <LanIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/roles"
+          },
+          {
+            name: 'Salir',
+            icon: <LogoutIcon sx={{ color: "#D9D9D9" }} />,
+            path: "/"
+          }
+        ]} />
 
-              </Link>
-
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
 
       <Main open={open}>
