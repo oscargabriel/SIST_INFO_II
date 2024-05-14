@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom"
 import Layout from "../layout/Layout"
 import Compras from "../pages/Compras"
 import Roles from "../pages/Roles"
+import Clientes from "../pages/Clientes"
 
  const router = createBrowserRouter([
     { path: '/login', element: <div>Login</div>, },
@@ -11,7 +12,7 @@ import Roles from "../pages/Roles"
         children : [
             { path: '/compras', element: <Compras/>, },
             { path: '/ventas', element: <div>ventas</div>, },
-            { path: '/clientes', element: <div>clientes</div>, },
+            { path: '/clientes', element: <Clientes/>, },
             { path: '/productos', element: <div>productos</div>, },
             { path: '/proveedores', element: <div>proveedores</div>, },
             { path: '/empleados', element: <div>empleados</div>, },
