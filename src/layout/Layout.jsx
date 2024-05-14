@@ -5,7 +5,7 @@ import { getUsers } from "../api/testAPi";
 import { styled, useTheme } from '@mui/material/styles';
 
 import {
-  Button
+  IconButton
 } from "@mui/material";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -15,14 +15,20 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-
-
-
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-
 import ListItemText from '@mui/material/ListItemText';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import GroupIcon from '@mui/icons-material/Group';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import LanIcon from '@mui/icons-material/Lan';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -34,6 +40,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+
     marginLeft: `-${drawerWidth}px`,
     ...(open && {
       transition: theme.transitions.create('margin', {
@@ -43,11 +50,14 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
       marginLeft: 0,
     }),
   }),
+
 );
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
+
+  background: '#D9D9D9',
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -76,6 +86,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Layout = () => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
 
   useEffect(() => {
 
@@ -92,15 +110,18 @@ const Layout = () => {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <Button
+          <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={()=>setOpen(true)}
+            onClick={handleDrawerOpen}
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            Menu
-          </Button>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" color={"red"}>
+            MundoVinyl
+          </Typography>
         </Toolbar>
       </AppBar>
 
@@ -118,22 +139,37 @@ const Layout = () => {
         open={open}
       >
         <DrawerHeader>
-          <Button onClick={()=>setOpen(false)}>
-            x
-          </Button>
-          <Typography variant="h6" color={"red"} >
-            MundoVinyl
-          </Typography>
+          <IconButton onClick={handleDrawerClose}>
+            <CloseIcon />
+          </IconButton>
         </DrawerHeader>
 
         <Divider />
         <List>
           <h4>Módulos</h4>
-          {['Compras', 'Ventas'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          {[
+            {
+              name: 'Compras',
+              icon: <ShoppingBagIcon />,
+              path: "/compras"
+            },
+            {
+              name: 'Ventas',
+              icon: <PointOfSaleIcon />,
+              path: "/ventas"
+            }
+          ].map((obj, index) => (
+            <ListItem key={index} disablePadding>
+              <Link to={obj.path}>
+                <ListItemButton>
+                <ListItemIcon>
+                  {obj.icon}
+                </ListItemIcon>
+                  <ListItemText primary={obj.name} />
+                </ListItemButton>
+
+              </Link>
+
             </ListItem>
           ))}
         </List>
@@ -141,12 +177,35 @@ const Layout = () => {
         <Divider />
 
         <List>
-        <h4>Catalogos</h4>
-          {['Clientes', 'Productos', 'Proveedores'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          <h4>Catalogos</h4>
+          {[
+            {
+              name: 'Clientes',
+              icon: <GroupIcon />,
+              path: "/clientes"
+            },
+            {
+              name: 'Productos',
+              icon: <InventoryIcon />,
+              path: "/productos"
+            },
+            {
+              name: 'Proveedores',
+              icon: <LocalShippingIcon />,
+              path: "/proveedores"
+            }
+          ].map((obj, index) => (
+            <ListItem key={index} disablePadding>
+              <Link to={obj.path}>
+                <ListItemButton>
+                <ListItemIcon>
+                  {obj.icon}
+                </ListItemIcon>
+                  <ListItemText primary={obj.name} />
+                </ListItemButton>
+
+              </Link>
+
             </ListItem>
           ))}
         </List>
@@ -154,12 +213,35 @@ const Layout = () => {
         <Divider />
 
         <List>
-        <h4>Usuarios</h4>
-          {['Empleados', 'Roles', 'Salir'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          <h4>Usuarios</h4>
+          {[
+            {
+              name: 'Empleados',
+              icon: <GroupIcon />,
+              path: "/empleados"
+            },
+            {
+              name: 'Roles',
+              icon: <LanIcon />,
+              path: "/roles"
+            },
+            {
+              name: 'Salir',
+              icon: <LogoutIcon />,
+              path: "/"
+            }
+          ].map((obj, index) => (
+            <ListItem key={index} disablePadding>
+              <Link to={obj.path}>
+                <ListItemButton>
+                <ListItemIcon>
+                  {obj.icon}
+                </ListItemIcon>
+                  <ListItemText primary={obj.name} />
+                </ListItemButton>
+
+              </Link>
+
             </ListItem>
           ))}
         </List>
@@ -170,7 +252,7 @@ const Layout = () => {
         <Outlet />
       </Main>
 
-      
+
     </Box>
   );
 };
