@@ -10,7 +10,12 @@ import Compras from "../pages/Compras"
         children : [
             { path: '/compras', element: <Compras/>, },
             { path: '/ventas', element: <div>ventas</div>, },
-            
+            { path: '/clientes', element: <div>clientes</div>, },
+            { path: '/productos', element: <div>productos</div>, },
+            { path: '/proveedores', element: <div>proveedores</div>, },
+            { path: '/empleados', element: <div>empleados</div>, },
+            { path: '/roles', element: <div>roles</div>, },
+      
         ]
     }
 ])
