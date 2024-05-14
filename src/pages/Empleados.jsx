@@ -11,17 +11,32 @@ import { IconButton, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
-import ListIcon from '@mui/icons-material/List';
 
-function createData(rif, name, direction, telphone) {
-    return { rif, name, direction, telphone};
+function createData(numId, name, email, rol, date, status) {
+    return { numId, name, email, rol, date, status };
 }
 
-const Clientes = () => {
+const statusComponent = [
+    {
+        name: 'Disponible',
+        sx: {backgroundColor:'#38BF22', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
+    },
+
+    {
+        name: 'Vacaciones',
+        sx: {backgroundColor:'#33BAB2', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
+    },
+    {
+        name: 'Ocupado',
+        sx: {backgroundColor:'#BA3333', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
+    },
+]
+
+const Empleados = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [listClients, setListClients] = useState([])
+    const [listEmployers, setListEmployers] = useState([])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -43,10 +58,10 @@ const Clientes = () => {
 
     useEffect(() => {
 
-        setListClients([
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
+        setListEmployers([
+            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Vtas', '10/10/2023', 0),
+            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Com', '10/10/2023', 1),
+            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Adm', '10/10/2023', 2),
         ])
     }, [])
 
@@ -57,7 +72,7 @@ const Clientes = () => {
                 component="h1"
                 sx={{ fontWeight: 'bold', fontSize: '32px', paddingBottom: '50px' }}
             >
-                Clientes
+                Empleados
             </Typography>
 
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -69,35 +84,38 @@ const Clientes = () => {
                     >
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Rif</TableCell>
+                                <TableCell align="center">Numero identificación</TableCell>
                                 <TableCell align="center">Nombre</TableCell>
-                                <TableCell align="center">Dirección</TableCell>
-                                <TableCell align="center">Telefono</TableCell>
+                                <TableCell align="center">Correo</TableCell>
+                                <TableCell align="center">Rol</TableCell>
+                                <TableCell align="center">Fecha</TableCell>
+                                <TableCell align="center">Estado</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {listClients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                            {listEmployers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                                 <TableRow
                                     key={index}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                    <TableCell align="center">{row.rif}</TableCell>
+                                    <TableCell align="center">{row.numId}</TableCell>
                                     <TableCell align="center">{row.name}</TableCell>
-                                    <TableCell align="center">{row.direction}</TableCell>
-                                    <TableCell align="center">{row.telphone}</TableCell>
+                                    <TableCell align="center">{row.email}</TableCell>
+                                    <TableCell align="center">{row.rol}</TableCell>
+                                    <TableCell align="center">{row.date}</TableCell>
+                                    <TableCell align="center">
+                                        <Typography variant='p' sx={statusComponent[row.status].sx}>
+                                            {statusComponent[row.status].name}
+                                        </Typography>
+                                    </TableCell>
                                     <TableCell>
-                                        <IconButton onClick={()=>view(row)}>
+                                        <IconButton onClick={() => view(row)}>
                                             <VisibilityIcon id={index} sx={{ color: "black" }} />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell>
-                                        <IconButton onClick={()=>edit(row)}>
+                                        <IconButton onClick={() => edit(row)}>
                                             <EditIcon sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={()=>edit(row)}>
-                                            <ListIcon sx={{ color: "black" }} />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>
@@ -108,7 +126,7 @@ const Clientes = () => {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={listClients.length}
+                    count={listEmployers.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -119,4 +137,4 @@ const Clientes = () => {
     );
 }
 
-export default Clientes
+export default Empleados
