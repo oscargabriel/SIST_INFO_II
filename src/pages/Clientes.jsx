@@ -12,16 +12,25 @@ import { useState, useEffect } from 'react';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import ListIcon from '@mui/icons-material/List';
+import InfoClient from '../Components/InfoClient';
+
 
 function createData(rif, name, direction, telphone) {
-    return { rif, name, direction, telphone};
+    return { rif, name, direction, telphone };
 }
+
+
+const initial_state = createData("","","","")
 
 const Clientes = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [listClients, setListClients] = useState([])
+    const [listClients, setListClients] = useState([]);
+    const [selectInfo, setSelectInfo] = useState(initial_state)
+    const [view, setView] = useState(false);
+    const [Edit, setOpenEdit] = useState(false);
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -32,21 +41,29 @@ const Clientes = () => {
         setPage(0);
     };
 
+    const openView = (obj) => {
+        setView(true);
+        setSelectInfo(obj);
+    }
 
-    const view = (obj) => {
+    const closeView = () => {
+        setView(false);
+    };
+
+    const openEdit = (obj) => {
         console.log(obj)
     }
 
-    const edit = (obj) => {
+    const cLoseEdit = (obj) => {
         console.log(obj)
     }
 
     useEffect(() => {
 
         setListClients([
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
-            createData('#00000', 'nomre', 'direccion', '+584124875214'),
+            createData('#10000', 'nomre', 'direccion', '+584124875214'),
+            createData('#20000', 'nomre', 'direccion', '+584124875214'),
+            createData('#30000', 'nomre', 'direccion', '+584124875214'),
         ])
     }, [])
 
@@ -86,17 +103,17 @@ const Clientes = () => {
                                     <TableCell align="center">{row.direction}</TableCell>
                                     <TableCell align="center">{row.telphone}</TableCell>
                                     <TableCell>
-                                        <IconButton onClick={()=>view(row)}>
+                                        <IconButton onClick={() => openView(row)}>
                                             <VisibilityIcon id={index} sx={{ color: "black" }} />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell>
-                                        <IconButton onClick={()=>edit(row)}>
+                                        <IconButton onClick={() => openEdit(row)}>
                                             <EditIcon sx={{ color: "black" }} />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell>
-                                        <IconButton onClick={()=>edit(row)}>
+                                        <IconButton>
                                             <ListIcon sx={{ color: "black" }} />
                                         </IconButton>
                                     </TableCell>
@@ -105,6 +122,7 @@ const Clientes = () => {
                         </TableBody>
                     </Table>
                 </TableContainer >
+
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
@@ -114,7 +132,12 @@ const Clientes = () => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+
             </Paper>
+
+            < InfoClient info={selectInfo} isOpen={view} handleClose={closeView} />
+
+
         </Box>
     );
 }
