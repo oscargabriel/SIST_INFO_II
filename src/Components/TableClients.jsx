@@ -1,6 +1,5 @@
 import {
     IconButton,
-    Typography,
     Table,
     TableBody,
     TableCell,
@@ -19,7 +18,7 @@ import { useState } from 'react';
 
 const TableClients = (props) => {
 
-    const {openView, openEdit, listClients} = props;
+    const { openView, openEdit, listClients } = props;
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -33,74 +32,65 @@ const TableClients = (props) => {
     };
 
     return (
-        <>
 
-            <Typography
-                component="h1"
-                sx={{ fontWeight: 'bold', fontSize: '32px', paddingBottom: '50px' }}
-            >
-                Clientes
-            </Typography>
-
-            <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableContainer component={Paper}>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size='small'
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">Rif</TableCell>
-                                <TableCell align="center">Nombre</TableCell>
-                                <TableCell align="center">Dirección</TableCell>
-                                <TableCell align="center">Telefono</TableCell>
+        <Paper sx={{ width: '100%', mb: 2 }}>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{ minWidth: 750 }}
+                    aria-labelledby="tableTitle"
+                    size='small'
+                >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">Rif</TableCell>
+                            <TableCell align="center">Nombre</TableCell>
+                            <TableCell align="center">Dirección</TableCell>
+                            <TableCell align="center">Telefono</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {listClients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                            <TableRow
+                                key={index}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell align="center">{row.rif}</TableCell>
+                                <TableCell align="center">{row.name}</TableCell>
+                                <TableCell align="center">{row.address}</TableCell>
+                                <TableCell align="center">{row.telephone}</TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => openView(index)}>
+                                        <VisibilityIcon id={index} sx={{ color: "black" }} />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => openEdit(index)}>
+                                        <EditIcon sx={{ color: "black" }} />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton>
+                                        <ListIcon sx={{ color: "black" }} />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {listClients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">{row.rif}</TableCell>
-                                    <TableCell align="center">{row.name}</TableCell>
-                                    <TableCell align="center">{row.address}</TableCell>
-                                    <TableCell align="center">{row.telephone}</TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={() => openView(index)}>
-                                            <VisibilityIcon id={index} sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={() => openEdit(index)}>
-                                            <EditIcon sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton>
-                                            <ListIcon sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer >
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer >
 
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={listClients.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={listClients.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
 
-            </Paper>
+        </Paper>
 
-        </>
     )
 }
 
