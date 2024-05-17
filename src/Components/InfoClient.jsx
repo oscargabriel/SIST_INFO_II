@@ -31,8 +31,8 @@ const InfoClient = (props) =>{
                     </div>
                     <br />
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Info name="Dirección" value={info.direction} />
-                        <Info name="Telefono" value={info.telphone} />
+                        <Info name="Dirección" value={info.address} />
+                        <Info name="Telefono" value={info.telephone} />
                     </div>
 
                 </DialogContent>
