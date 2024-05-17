@@ -1,60 +1,46 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import TablePagination from '@mui/material/TablePagination';
-import Box from '@mui/material/Box';
-import { IconButton, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
+import TableEmployers from '../Components/TableEmployers';
+import InfoEmployer from '../Components/InfoEmployer';
 
 function createData(numId, name, email, rol, date, status) {
     return { numId, name, email, rol, date, status };
 }
 
-const statusComponent = [
-    {
-        name: 'Disponible',
-        sx: {backgroundColor:'#38BF22', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
-    },
-
-    {
-        name: 'Vacaciones',
-        sx: {backgroundColor:'#33BAB2', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
-    },
-    {
-        name: 'Ocupado',
-        sx: {backgroundColor:'#BA3333', color: 'white', padding:"5px", borderRadius:2, fontWeight:'bold'},
-    },
-]
+const initial_state = createData("","","","","",0)
 
 const Empleados = () => {
 
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    
     const [listEmployers, setListEmployers] = useState([])
+    const [selectInfo, setSelectInfo] = useState(initial_state)
+    const [view, setView] = useState(false);
+    const [edit, setEdit] = useState(false);
+    
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+    const openView = (index) => {
+        
+        const info = listEmployers[index]
+        setSelectInfo(info)
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-
-    const view = (obj) => {
-        console.log(obj)
+        setView(true);
     }
 
-    const edit = (obj) => {
-        console.log(obj)
+    const closeView = () => {
+        setView(false);
+    };
+
+    const openEdit = (index) => {
+        const info = listEmployers[index]
+        setSelectInfo(info)
+
+        setEdit(true)
     }
+
+    const closeEdit = () => {
+        setEdit(false)
+    }
+    
 
     useEffect(() => {
 
@@ -75,64 +61,10 @@ const Empleados = () => {
                 Empleados
             </Typography>
 
-            <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableContainer component={Paper}>
-                    <Table
-                        sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size='small'
-                    >
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">Numero identificación</TableCell>
-                                <TableCell align="center">Nombre</TableCell>
-                                <TableCell align="center">Correo</TableCell>
-                                <TableCell align="center">Rol</TableCell>
-                                <TableCell align="center">Fecha</TableCell>
-                                <TableCell align="center">Estado</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {listEmployers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell align="center">{row.numId}</TableCell>
-                                    <TableCell align="center">{row.name}</TableCell>
-                                    <TableCell align="center">{row.email}</TableCell>
-                                    <TableCell align="center">{row.rol}</TableCell>
-                                    <TableCell align="center">{row.date}</TableCell>
-                                    <TableCell align="center">
-                                        <Typography variant='p' sx={statusComponent[row.status].sx}>
-                                            {statusComponent[row.status].name}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={() => view(row)}>
-                                            <VisibilityIcon id={index} sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton onClick={() => edit(row)}>
-                                            <EditIcon sx={{ color: "black" }} />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer >
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={listEmployers.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
+            <TableEmployers listEmployers={listEmployers} openView={openView} openEdit={openEdit} />
+            <InfoEmployer info={selectInfo} isOpen={view} handleClose={closeView} />
+
+
         </Box>
     );
 }

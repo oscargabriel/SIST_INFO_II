@@ -4,7 +4,7 @@ const Info = (props) => {
     const { name, value } = props;
 
     return (
-        <div>
+        <div style={{marginRight:"30PX"}}>
             <Typography variant="h7" sx={{ fontWeight: 'bold' }}>
                 {name}
             </Typography>

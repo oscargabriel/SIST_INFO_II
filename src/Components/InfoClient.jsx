@@ -13,7 +13,7 @@ const InfoClient = (props) =>{
                 onClose={handleClose}
                 open={isOpen}
                 sx={{ padding: '10px ' }}>
-                <DialogTitle>
+                <DialogTitle sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Typography variant='p' sx={{ fontWeight: 'bold' }} >
                         Información del cliente
 
