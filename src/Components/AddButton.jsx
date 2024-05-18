@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
+import AddIcon from '@mui/icons-material/Add';
 
 
 const AddButton = (props) => {
@@ -9,7 +9,7 @@ const AddButton = (props) => {
         <Button
             variant="contained"
             onClick={action}
-            startIcon={<CheckIcon sx={{ color: "white" }} />}
+            startIcon={<AddIcon sx={{ color: "white" }} />}
             sx={{marginBottom:"40px"}}
         >
 

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import TableEmployers from '../Components/TableEmployers';
 import InfoEmployer from '../Components/InfoEmployer';
 import EditEmployer from '../Components/EditEmployer';
+import AddButton from '../Components/AddButton';
+import AddEmployer from '../Components/AddEmployer';
 
 function createData(numId, name, email, rol, date, status) {
     return { numId, name, email, rol, date, status };
@@ -17,7 +19,7 @@ const Empleados = () => {
     const [selectInfo, setSelectInfo] = useState(initial_state)
     const [view, setView] = useState(false);
     const [edit, setEdit] = useState(false);
-    
+    const [add, setAdd] = useState(false);
 
     const openView = (index) => {
         
@@ -42,12 +44,27 @@ const Empleados = () => {
         setEdit(false)
     }
     
+    const openAdd = () =>{
+        setAdd(true)
+    }
+
+    const closeAdd = () =>{
+        setAdd(false)
+    }
+
     const updateRecord = (data)=>{
         const newList = listEmployers.map((obj) =>{
             return obj.numId === selectInfo.numId?  data: obj;
         })
         setListEmployers(newList)
         setEdit(false)
+    }
+
+    const addElement = (data)=>{
+        const newList = listEmployers
+        newList.push(data)
+        setListEmployers(newList)
+        setAdd(false)
     }
 
     useEffect(() => {
@@ -68,7 +85,8 @@ const Empleados = () => {
             >
                 Empleados
             </Typography>
-
+            <AddButton action={openAdd} >Agregar Empleado</AddButton>
+            <AddEmployer addElement={addElement} isOpen={add} handleClose={closeAdd} />
             <TableEmployers listEmployers={listEmployers} openView={openView} openEdit={openEdit} />
             <InfoEmployer info={selectInfo} isOpen={view} handleClose={closeView} />
 
