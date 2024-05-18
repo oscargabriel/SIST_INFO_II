@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import TableEmployers from '../Components/TableEmployers';
 import InfoEmployer from '../Components/InfoEmployer';
+import EditEmployer from '../Components/EditEmployer';
 
 function createData(numId, name, email, rol, date, status) {
     return { numId, name, email, rol, date, status };
@@ -41,13 +42,20 @@ const Empleados = () => {
         setEdit(false)
     }
     
+    const updateRecord = (data)=>{
+        const newList = listEmployers.map((obj) =>{
+            return obj.numId === selectInfo.numId?  data: obj;
+        })
+        setListEmployers(newList)
+        setEdit(false)
+    }
 
     useEffect(() => {
 
         setListEmployers([
-            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Vtas', '10/10/2023', 0),
-            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Com', '10/10/2023', 1),
-            createData('#00000', 'nomre', 'correoempleado@mail.com', ' Oper - Adm', '10/10/2023', 2),
+            createData('#00001', 'nomre', 'correoempleado@mail.com', ' Oper - Vtas', '10/10/2023', 0),
+            createData('#00002', 'nomre', 'correoempleado@mail.com', ' Oper - Com', '10/10/2023', 1),
+            createData('#00003', 'nomre', 'correoempleado@mail.com', ' Oper - Adm', '10/10/2023', 2),
         ])
     }, [])
 
@@ -64,7 +72,7 @@ const Empleados = () => {
             <TableEmployers listEmployers={listEmployers} openView={openView} openEdit={openEdit} />
             <InfoEmployer info={selectInfo} isOpen={view} handleClose={closeView} />
 
-
+            <EditEmployer updateList={updateRecord} isOpen={edit} handleClose={closeEdit}  />
         </Box>
     );
 }
