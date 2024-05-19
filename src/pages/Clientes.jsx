@@ -72,11 +72,7 @@ const Clientes = () => {
 
     useEffect(() => {
 
-        setListClients([
-            createData('#10000', 'nomre', 'direccion', '+584124875214'),
-            createData('#20000', 'nomre', 'direccion', '+584124875214'),
-            createData('#30000', 'nomre', 'direccion', '+584124875214'),
-        ])
+        console.log("Aqui se hara el llamado de la api para obtener clientes");
     }, [])
 
     return (

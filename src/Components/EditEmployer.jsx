@@ -12,8 +12,7 @@ import {
     DialogActions,
     InputLabel,
     Select,
-    MenuItem,
-    OutlinedInput
+    MenuItem
 } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import OKButton from "./OKButton";
@@ -30,18 +29,17 @@ const EditEmployer = (props) => {
         email: "",
         telephone: "",
         address: "",
-        rol: "",
+        rol: 0,
         status: 0
     }
 
-    const { updateList, isOpen, handleClose } = props
-    const [form, handleChange, reset] = useForm(initial)
-
+    const { updateList, isOpen, handleClose, rolList } = props;
+    const [form, handleChange, reset] = useForm(initial);
+    
     const save = () => {
 
         const noewTime = Date.now();
         const today = new Date(noewTime);
-
 
         updateList({
             numId: form.typeId + "-" + form.numId,
@@ -50,7 +48,7 @@ const EditEmployer = (props) => {
             telephone: form.telephone,
             address: form.address,
             date: today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear(),
-            rol: "falta fielld rol",
+            rol: rolList[form.rol],
             status: form.status
         })
         reset()
@@ -133,21 +131,37 @@ const EditEmployer = (props) => {
                     value={form.address}
                     onChange={handleChange}
                 />
+
                 <br />
 
-                <FormControl>
+                <FormControl sx={{ marginBottom: "20px", width: "100%" }}>
+                    <InputLabel>Rol</InputLabel>
+                    <Select
+                        name="rol"
+                        value={form.rol}
+                        label="Status"
+                        onChange={handleChange}
+                    >
+                        {
+                            rolList.map((name, index) => (
+                                <MenuItem value={index} key={index}>{name}</MenuItem>
+                            ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl sx={{ width: "100%" }}>
                     <InputLabel>Status</InputLabel>
                     <Select
                         name="status"
                         value={form.status}
                         label="Status"
                         onChange={handleChange}
-                        sx={{ width: "100%" }}
+                        
                     >
                         <MenuItem value={0}>Disponible</MenuItem>
                         <MenuItem value={1}>Vacaciones</MenuItem>
                         <MenuItem value={2}>Ocupado</MenuItem>
-                    </Select>
+                        </Select>
                 </FormControl>
 
             </DialogContent>

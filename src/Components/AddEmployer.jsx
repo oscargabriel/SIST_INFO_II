@@ -18,6 +18,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import OKButton from "./OKButton";
 import CancelButton from "./CancelButton";
 import useForm from "../utils/useForm";
+import { useState, useEffect } from "react";
+
 
 const AddEmployer = (props) => {
 
@@ -28,12 +30,13 @@ const AddEmployer = (props) => {
         email: "",
         telephone: "",
         address: "",
-        rol: "",
+        rol: 0,
         status: 0
     }
 
-    const { addElement, isOpen, handleClose } = props
+    const { addElement, isOpen, handleClose, rolList } = props
     const [form, handleChange, reset] = useForm(initial)
+
 
     const save = () => {
 
@@ -48,7 +51,7 @@ const AddEmployer = (props) => {
             telephone: form.telephone,
             address: form.address,
             date: today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear(),
-            rol: "falta fielld rol",
+            rol: rolList[form.rol],
             status: form.status
         })
         reset()
@@ -133,14 +136,28 @@ const AddEmployer = (props) => {
                 />
                 <br />
 
-                <FormControl>
+                <FormControl sx={{ marginBottom: "20px", width: "100%" }}>
+                    <InputLabel>Rol</InputLabel>
+                    <Select
+                        name="rol"
+                        value={form.rol}
+                        label="Status"
+                        onChange={handleChange}
+                    >
+                        {
+                            rolList.map((name, index) => (
+                                <MenuItem value={index} key={index}>{name}</MenuItem>
+                            ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl  sx={{  width: "100%" }}>
                     <InputLabel>Status</InputLabel>
                     <Select
                         name="status"
                         value={form.status}
                         label="Status"
                         onChange={handleChange}
-                        sx={{ width: "100%" }}
                     >
                         <MenuItem value={0}>Disponible</MenuItem>
                         <MenuItem value={1}>Vacaciones</MenuItem>

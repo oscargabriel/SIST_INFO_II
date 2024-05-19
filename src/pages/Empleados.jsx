@@ -20,6 +20,7 @@ const Empleados = () => {
     const [view, setView] = useState(false);
     const [edit, setEdit] = useState(false);
     const [add, setAdd] = useState(false);
+    const [rolList, setRolList] = useState([]);
 
     const openView = (index) => {
         
@@ -69,11 +70,8 @@ const Empleados = () => {
 
     useEffect(() => {
 
-        setListEmployers([
-            createData('#00001', 'nomre', 'correoempleado@mail.com', ' Oper - Vtas', '10/10/2023', 0),
-            createData('#00002', 'nomre', 'correoempleado@mail.com', ' Oper - Com', '10/10/2023', 1),
-            createData('#00003', 'nomre', 'correoempleado@mail.com', ' Oper - Adm', '10/10/2023', 2),
-        ])
+        console.log("Aqui se hara el llamado de la api para obtener empleados");
+        setRolList(["Rol1", "Rol2", "Rol3"])
     }, [])
 
     return (
@@ -86,11 +84,11 @@ const Empleados = () => {
                 Empleados
             </Typography>
             <AddButton action={openAdd} >Agregar Empleado</AddButton>
-            <AddEmployer addElement={addElement} isOpen={add} handleClose={closeAdd} />
+            <AddEmployer addElement={addElement} isOpen={add} handleClose={closeAdd} rolList={rolList} />
             <TableEmployers listEmployers={listEmployers} openView={openView} openEdit={openEdit} />
             <InfoEmployer info={selectInfo} isOpen={view} handleClose={closeView} />
 
-            <EditEmployer updateList={updateRecord} isOpen={edit} handleClose={closeEdit}  />
+            <EditEmployer updateList={updateRecord} isOpen={edit} handleClose={closeEdit} rolList={rolList} />
         </Box>
     );
 }
