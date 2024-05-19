@@ -38,11 +38,7 @@ const Roles = () => {
 
     useEffect(() => {
 
-        setListRol([
-            createData('OPERADOR', 'OPERADOR', 'ADMINISTRATIVO', true, false, true, false),
-            createData('OPERADOR', 'OPERADOR', 'ADMINISTRATIVO', true, false, true, false),
-            createData('OPERADOR', 'OPERADOR', 'ADMINISTRATIVO', true, false, true, false),
-        ])
+        console.log("Aqui se hara el llamado de la api para obtener roles");
     }, [])
 
     return (
@@ -54,7 +50,7 @@ const Roles = () => {
             >
                 Listado de Roles
             </Typography>
-            <AddButton action={openAdd} >Agregar Cliente</AddButton>
+            <AddButton action={openAdd} >Agregar Rol</AddButton>
             <AddRol addElement={addElement} isOpen={add} handleClose={closeAdd} />
             <TableRol listRol={listRol} openView={openView} openEdit={openEdit} />
         </Box>
