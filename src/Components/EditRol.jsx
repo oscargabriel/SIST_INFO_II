@@ -20,7 +20,7 @@ import CancelButton from "./CancelButton";
 import useForm from "../utils/useForm";
 import { useState, useEffect } from "react";
 
-const AddRol = (props) => {
+const EditRol = (props) => {
 
     const initial = {
         typeOperator: 0,
@@ -33,14 +33,14 @@ const AddRol = (props) => {
     }
 
 
-    const { addElement, isOpen, handleClose } = props
+    const { updateList, isOpen, handleClose } = props
     const [form, handleChange, reset] = useForm(initial)
     const [departamentsList, setDepartamentsList] = useState([])
     const [typesOperator, setTypesOperator] = useState([])
 
     const save = () => {
 
-        addElement({
+        updateList({
             opeType: typesOperator[form.typeOperator],
             rol: form.rol,
             departament: departamentsList[form.departament],
@@ -68,7 +68,7 @@ const AddRol = (props) => {
 
             <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between'}}>
                 <Typography variant='p' sx={{ fontWeight: 'bold' }} >
-                    Agregar Rol
+                    Editar Rol
                 </Typography>
 
                 <IconButton aria-label="close" onClick={handleClose} sx={{ marginLeft: '8px' }}>
@@ -135,4 +135,4 @@ const AddRol = (props) => {
     )
 }
 
-export default AddRol
+export default EditRol
