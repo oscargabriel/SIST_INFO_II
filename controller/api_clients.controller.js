@@ -20,6 +20,7 @@ class clientController {
 			let cliente;
 			if (req.body.hasOwnProperty('cliente')) {
 				// console.log("entro");
+        console.log(`body: ${req.body}`)
 				cliente = await createOneCLiente({ ...req.body });
 			} else if (req.body.hasOwnProperty('clientes')) {
 				// cliente = await createManyCLientes({});
@@ -32,35 +33,36 @@ class clientController {
 		}
 	}
 
-	//   static async updateCliente(req, res) {
-	//     try {
-	//       const { id } = req.params;
-	//       const { nombre, apellido, cedula, telefono } = req.body;
-	//       const [updated] = await Cliente.update({ nombre, apellido, cedula, telefono }, { where: { id } });
-	//       if (updated) {
-	//         const cliente = await Cliente.findOne({ where: { id } });
-	//         res.status(200).json({ message: 'Cliente actualizado exitosamente', data: cliente });
-	//       }
-	//       throw new Error('Cliente no encontrado');
-	//     } catch (error) {
-	//       console.error(error);
-	//       res.status(500).json({ message: 'Error al actualizar el cliente' });
-	//     }
-	//   }
-
-	//   static async getCliente(req, res) {
-	//     try {
-	//       const { id } = req.params;
-	//       const cliente = await Cliente.findOne({ where: { id } });
-	//       if (cliente) {
-	//         res.status(200).json({ message: 'Cliente encontrado', data: cliente });
-	//       }
-	//       throw new Error('Cliente no encontrado');
-	//     } catch (error) {
-	//       console.error(error);
-	//       res.status(404).json({ message: 'Cliente no encontrado' });
-	//     }
-	//   }
+  static async updateCliente(req, res) {
+    try {
+      const { id } = req.params.id;
+      const { nombre, apellido, cedula, telefono } = req.body;
+      const [updated] = await Cliente.update({ nombre, apellido, cedula, telefono }, { where: { id } });
+      if (updated) {
+        const cliente = await Cliente.findOne({ where: { id } });
+        res.status(200).json({ message: 'Cliente actualizado exitosamente', data: cliente });
+      }
+      throw new Error('Cliente no encontrado');
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al actualizar el cliente' });
+    }
+  }
+    
+  static async getCliente(req, res) {
+	  try {
+	    const { id } = req.params.id;
+      console.log('id:   '+id)
+	    const cliente = await Cliente.findOne({ where: { id } });
+	    if (cliente) {
+	      res.status(200).json({ message: 'Cliente encontrado', data: cliente });
+	    }
+	    throw new Error('Cliente no encontrado');
+	  } catch (error) {
+	    console.error(error);
+	    res.status(404).json({ message: 'Cliente no encontrado' });
+	  }
+	}
 }
 
 module.exports = clientController;

@@ -7,7 +7,7 @@ const ViewCalcTotales = require('../models/viewTotales');
 // DEBE RECIBIR EL CLIENTEID Y DEBE LLAMAR LA TABLA DETALLE PEDIDO QUE LE PERMITA ALCULAR EL TOTAL
 async function regFactura(params) {
 	const response = {
-		message: "has ocurred an error in creation factura",
+		message: 'has ocurred an error in creation factura',
 		status: 400,
 		data: null,
 	};
@@ -41,14 +41,14 @@ async function regFactura(params) {
 			}
 		} else {
 			response.message =
-				"no existen productos pedidos para este cliente o el usuario  actual no esta autorizado";
+				'no existen productos pedidos para este cliente o el usuario  actual no esta autorizado';
 			response.status = 404;
 		}
 		// se debe verificar el clientid, la sucursalid y el user id
 
 		// el numro de fctura por ahora ira null
 	} catch (error) {
-		response.message = "has ocurred an error in function regfactura";
+		response.message = 'has ocurred an error in function regfactura';
 	}
 	return response;
 }
