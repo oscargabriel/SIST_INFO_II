@@ -54,12 +54,14 @@ app.use("/clientes", ClientsRoute);
 const PedidoRouter = require("./routes/pedidodet.route");
 app.use("/compras", PedidoRouter);
 
-// const clientRoute = require("./routes/cliente.route");
-
 const facturaRouter = require('./routes/factura.route');
 app.use('/ventas', facturaRouter);
 
-// app.use("/cliente", clientRoute);
+const empleadoRoute = require("./routes/empleado.route");
+app.use("/empleados", empleadoRoute);
+
+const rolRoute = require("./routes/rol.route");
+app.use("/rol", rolRoute);
 
 app.use((req, res, next) => {
 	const err = new Error(
